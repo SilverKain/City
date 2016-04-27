@@ -1,0 +1,135 @@
+
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.Test;
+import java.io.IOException;
+import org.testng.Assert;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+
+
+
+
+public class TestChicago {
+	
+	
+	@Test
+	public static void main(String[] args) throws IOException, InterruptedException {
+
+
+	    System.setProperty("webdriver.firefox.bin", "D:\\NewProgram\\Mozilla\\firefox.exe");
+
+	    WebDriver driver = new FirefoxDriver();
+
+	    System.setProperty("webdriver.ie.driver", "C:\\selenium-2.51.0\\IEDriverServer.exe");
+		 
+		String appUrl = "http://www.remax1stclass.com/apartments-for-rent/naperville";
+		
+		 driver.get(appUrl);
+		 
+	     
+		 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		 
+	     //WebElement SignInButton0 = driver.findElement(By.className("allCityListingsTotal"));
+	     
+	     String AllCityNum_str = driver.findElement(By.className("allCityListingsTotal")).getText();
+	   
+	    
+	     AllCityNum_str = AllCityNum_str.replaceAll("[^\\d.]", "");
+	    
+	     int AllCityNum_int = Integer.parseInt(AllCityNum_str);
+
+	     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+	     System.out.println(AllCityNum_int); 
+	    
+	     int AllCityNumByZip_int3 = 0;
+	     
+
+	     List <WebElement> Element = driver.findElements(By.className("zipNameBox"));
+	     	
+	     for (int j = 0; j < Element.size(); j++) {
+	    	 // for (int k = 27; k < 30; k++) {
+	     		
+	    	 Element = driver.findElements(By.className("zipNameBox"));
+	     	    
+	    	 Thread.sleep(1000);     	  
+	     	   
+	    	 String AllCityNum_str2 = Element.get(j).getText();
+	     	   
+	     	   //Element = driver.findElements(By.className("zipListingsNum"));
+	     	   
+	     	 
+	     	   
+	    	 //WebElement SignInButton2 = driver.findElement(By.className("zipListingsNum"));
+
+	    	// String AllCityNum_str3 = driver.findElement(By.className("zipListingsNum")).getText();
+
+	    	 
+	    	 
+	     	    
+	    	 Element.get(j).click();
+	     	   
+
+
+	     	 //WebElement SignInButton = driver.findElement(By.className("listingsTotal"));
+
+	     	 String AllCityNum_str1 = driver.findElement(By.className("listingsTotal")).getText();
+
+	     	 AllCityNum_str1 = AllCityNum_str1.replaceAll("[^\\d.]", "");
+
+	     	 int AllCityNum_int1 = Integer.parseInt(AllCityNum_str1);
+
+	     	  // System.out.println(AllCityNum_int);
+
+	  	     List<WebElement> drop = driver.findElements(By.className("zipListingsNum"));
+	  	     
+	  	     java.util.Iterator<WebElement> i = drop.iterator();
+
+	  	     int AllCityNumByZip_int = 0;
+
+	  	     while(i.hasNext()) {
+
+	  	     WebElement row = i.next();   
+
+	  	     String AllCityNumByZip_str = row.getText().replaceAll("\\p{P}","");
+
+	  	     AllCityNumByZip_int = Integer.parseInt(AllCityNumByZip_str) + AllCityNumByZip_int;
+
+	 		    }
+	  	     
+	  	   if (AllCityNumByZip_int == AllCityNum_int1)  {
+	 		    System.out.println("Compare counts city: naperville type: zip test: "+AllCityNum_str2+" passed "+AllCityNum_int1+"=="+AllCityNumByZip_int);
+	 		    } else {
+	 		    		System.out.println("Compare counts city: naperville type: zip test: "+AllCityNum_str2+" failed "+AllCityNum_int1+"!="+AllCityNumByZip_int);
+	 		    		}
+	  	   AllCityNumByZip_int3 += AllCityNum_int1;
+	  	     
+	     	    Thread.sleep(1000);
+	     	    
+	     	    driver.navigate().back();
+	     	    
+	     	    Thread.sleep(1000);
+	     	}
+	     	
+	    	if (AllCityNumByZip_int3 == AllCityNum_int)  {
+	 	    System.out.println("Compare counts city: naperville type: rent test: passed "+AllCityNumByZip_int3+"=="+AllCityNum_int);
+	 	    } else {
+	 	    System.out.println("Compare counts city: naperville type: rent test: failed "+AllCityNumByZip_int3+"!="+AllCityNum_int);
+	     	
+	}
+}
+}
+	     
+
+	
