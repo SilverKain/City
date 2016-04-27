@@ -1,0 +1,83 @@
+
+import org.openqa.selenium.support.ui.WebDriverWait;
+
+import java.util.concurrent.TimeUnit;
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.firefox.FirefoxDriver;
+import org.openqa.selenium.chrome.ChromeDriver;
+import org.openqa.selenium.WebDriver;
+import org.testng.annotations.Test;
+import java.io.IOException;
+import org.testng.Assert;
+import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+
+
+
+
+
+public class TestChicago {
+	
+	
+	@Test
+	public static void main(String[] args) throws IOException, InterruptedException {
+
+		System.setProperty("webdriver.firefox.bin", "C:\\Program Files (x86)\\Google\\Chrome\\Application\\chrome.exe");
+		
+	    WebDriver driver = new ChromeDriver();
+	    
+		System.setProperty("webdriver.ie.driver", "C:\\selenium-2.51.0\\chromedriver.exe");
+		 
+		String appUrl = "http://www.remax1stclass.com/apartments-for-rent/naperville";
+		
+		 driver.get(appUrl);
+		 
+	//	 driver.manage().window().maximize();
+	     
+		 driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+		 
+	     WebElement SignInButton0 = driver.findElement(By.className("allCityListingsTotal"));
+	     
+	     String AllCityNum_str = driver.findElement(By.className("allCityListingsTotal")).getText();
+	    
+	//    String AllCityNum_str2 = driver.findElement(By.className("zipNameBox")).getText();
+	    
+	     AllCityNum_str = AllCityNum_str.replaceAll("[^\\d.]", "");
+	    
+	     int AllCityNum_int = Integer.parseInt(AllCityNum_str);
+
+	     driver.manage().timeouts().implicitlyWait(10, TimeUnit.SECONDS);
+
+	     System.out.println(AllCityNum_int); 
+	      
+	    List<WebElement> drop = driver.findElements(By.className("zipListingsNum"));
+	     
+	 //    java.util.Iterator<WebElement> i = drop.iterator();
+	     
+	   //  	int AllCityNumByZip_int2 = 0;
+	     	   	
+	     	
+	     	List <WebElement> Element = driver.findElements(By.className("zipNameBox"));
+	     	
+	     	for (int j = 0; j < Element.size(); j++) {
+	     		
+	     	    Element = driver.findElements(By.className("zipNameBox"));
+	     	    
+	     	   Thread.sleep(2000);
+	     	    
+	     	   Element.get(j).click();
+
+	     	 //   action.click(Element.get(j)).perform();
+	     	    
+	     	    Thread.sleep(2000);
+	     	    
+	     	    System.out.println();
+	     	    
+	     	    driver.navigate().back();
+	     	    
+	     	    Thread.sleep(2000);
+	     	    
